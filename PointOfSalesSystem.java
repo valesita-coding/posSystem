@@ -24,37 +24,37 @@ public class PointOfSalesSystem {
 		sortedE = new employeeRoster();
 		
 		loadMenuFile(args[0]); //loads menu list 
-		
-		loadMenuFile(args[1]); //loads ad-ons list 
+		//loadEmployeeFile(args[1]); //loads employeeList
+		//loadMenuFile(args[1]); //loads ad-ons list 
 		
 		boolean done = false;
 		
 		while(!done) {
-			logIN();
+			//logIN();
 			printMenu();
 			
 			String input = scnr.nextLine();
 			//options for the user and their outputs
 			if(input.equals("1")) { //1 
-				ingredients();
+				
 			}
 			else if(input.equals("2")) { //2 
-				recipe();
+				
 			}
 			else if(input.equals("3")) { // 3 
-				price();
+				
 			}
 			else if(input.equals("4")) { //4  
-				nutritionalInfo();
+				
 			}
 			else if(input.equals("5")) { // gives out the menu for types of sorting algorithms and does the sorting selected
-				searchRecords();
+				
 			}
 			else if(input.equals("6")) { //prints out the unsorted list 
-				printRecords();
+				
 			}
 			else if(input.equals("7")) { // sorts the records according to the desire of the user 
-				sortRecords();
+				
 			}
 			else if(input.equals("8")) { //prints out available famous sandwiches 
 				//loadFile();
@@ -75,11 +75,11 @@ public class PointOfSalesSystem {
 		
 
 	}
-		
+	/*	
 	public static void logIN() {
-		System.out.println("Please enter filename to read in employees");
+		System.out.println("To continue, please enter filename to read in employees");
 		String filename = scnr.nextLine().trim();
-		loadEmployeeFile(filename); //loads employeeList
+		loadEmployeeFile(filename);
 		System.out.println("To log in enter employee ID:");
 		
 		String id = scnr.nextLine();
@@ -99,6 +99,7 @@ public class PointOfSalesSystem {
 		System.out.println();
 		
 	}
+	*/
 	public static void printMenu() {
 		//prints current menu 
 		//will show different options such as
@@ -114,15 +115,15 @@ public class PointOfSalesSystem {
 		System.out.println("Joe-Bob’s Burgers (JBB)");
 		System.out.println("Please select an option");
 	
-		System.out.println("1   Ingredients");
-		System.out.println("2   Recipes");
-		System.out.println("3   Prices");
-		System.out.println("4   Nutritional Info");
-		System.out.println("5   Search records");
-		System.out.println("6   Print records");
-		System.out.println("7   Sort records");
-		System.out.println("8   Famous Recipes");
-		System.out.println("9   Check cart items");
+		System.out.println("1   Print Menu");
+		System.out.println("2   Sort Menu");
+		System.out.println("3   Ad-ons list");
+		System.out.println("4   Place order");
+		System.out.println("5   Search for menu item");
+		System.out.println("6   Export Employee order info");
+		System.out.println("7   Change menu item");
+		System.out.println("8   Add item to menu");
+		System.out.println("9   Delete item from menu");
 		System.out.println("0   Exit");
 		//System.out.println();
 	}
@@ -201,9 +202,9 @@ public class PointOfSalesSystem {
 		System.out.println();
 	}
 	
-	public static void printRecords() {
+	public static void printEmployeeList() {
 		//will print unsorted records 
-		unsorted.printList();
+		unsortedE.printList();
 	}
 	
 	public static void searchRecords() {
@@ -211,7 +212,7 @@ public class PointOfSalesSystem {
 		//will search for a record that matches 1 or more parameters 
 		// will call the searchItem() class 
 	}
-	public static void sortRecords(){
+	public static void sortMenu(){
 		//thinking on making it a class 
 		//will sort based on 1 or more parameters provided by user 
 		// will call the sortRecords() class 
@@ -314,7 +315,7 @@ public class PointOfSalesSystem {
 				String[] values = line.split(",");
 				//String id = "ID";
 				
-				if(!values[0].equals("")) {
+				if(!values[0].equals("ID")) {
 				
 					long newID = Long.parseLong(values[0]);
 					unsortedE.addEmployeeFront(newID, values[1]);

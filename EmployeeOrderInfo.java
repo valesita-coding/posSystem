@@ -21,8 +21,8 @@ public class EmployeeOrderInfo {
 	
 	@Override
 	public String toString() {
-		return "EmployeeOrderInfo [Name=" + employeeID + ", OrderNumber=" + OrderNumber + ", Time1=" + Time1 + ", Time2="
-				+ Time2 + ", elapsedTime=" + elapsedTime + "]";
+		return "\nEmployee ID" + employeeID + "\nOrderNumber" + OrderNumber + "\nTime1" + Time1 + "\nTime2"
+				+ Time2 + "\nelapsedTime" + elapsedTime;
 	}
 
 	public EmployeeOrderInfo(long employeeID) {
