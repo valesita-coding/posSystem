@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 //C:\Users\vales\Documents\try1.csv
 public class PointOfSalesSystem {
+	
+	
 	static Scanner scnr = new Scanner(System.in);
 	static employeeRoster unsortedE;
 	static employeeRoster sortedE;
 	static roster unsorted;
 	static roster sorted;
-	
+	static EmployeeOrderInfo tree;
 	static ArrayList<MenuOptions> options = new ArrayList<MenuOptions>();
 	static ArrayList<Double> searches = new ArrayList<Double>();
+	static ArrayList<EmployeeOrderInfo> employeeID = new ArrayList<EmployeeOrderInfo>();
 	
 	public static void main(String[] args) {
 		unsorted = new roster();
@@ -21,8 +24,8 @@ public class PointOfSalesSystem {
 		sortedE = new employeeRoster();
 		
 		loadMenuFile(args[0]); //loads menu list 
-		loadEmployeeFile(args[1]); //loads employeeList
-		//loadFile(args[2]); //loads ad-ons list 
+		
+		loadMenuFile(args[1]); //loads ad-ons list 
 		
 		boolean done = false;
 		
@@ -74,19 +77,27 @@ public class PointOfSalesSystem {
 	}
 		
 	public static void logIN() {
+		System.out.println("Please enter filename to read in employees");
+		String filename = scnr.nextLine().trim();
+		loadEmployeeFile(filename); //loads employeeList
 		System.out.println("To log in enter employee ID:");
+		
 		String id = scnr.nextLine();
 		boolean done = false;
 		long idNum =0;
 		while(!done) {
 			try {
 				idNum = Long.parseLong(id);
-				break;
+				done= true;
 				
 			}catch (Exception e){
 				System.out.println("Please enter a valid employee ID");
 			}
 		}
+		
+		tree.search(idNum);
+		System.out.println();
+		
 	}
 	public static void printMenu() {
 		//prints current menu 
@@ -241,7 +252,7 @@ public class PointOfSalesSystem {
 	
 	
 	
-	public static void employeeReward() {
+	public static void employeeReward(String filename) {
 		// will call the employee order info class 
 	//will show the rewards earned by each employee	
 		/*most orders
@@ -294,24 +305,24 @@ public class PointOfSalesSystem {
 			
 			int countLoaded = 0;
 			//String filename = scnr.nextLine().trim();
+			//filename = scnr.nextLine().trim();
+			Scanner filescanner = new Scanner(new File(filename));
 			unsortedE= new employeeRoster();
 			sortedE = new employeeRoster();
-			Scanner filescanner = new Scanner(new File(filename));
 			while(filescanner.hasNext()) {
 				String line = filescanner.nextLine();
 				String[] values = line.split(",");
-				if(!values[0].equals("Employee ID")) {
+				//String id = "ID";
+				
+				if(!values[0].equals("")) {
+				
+					long newID = Long.parseLong(values[0]);
+					unsortedE.addEmployeeFront(newID, values[1]);
 					
-					//studentNode temp = new studentNode(values[0], values[1], Long.parseLong(values[2]));
-					unsortedE.addEmployeeFront(Long.parseLong(values[0]), values[1]);
-					
-					//sorted.addStudentSorted(temp.clone());
-					//System.out.println("something");
-					//students.add(new studentNode(values[0], values[1], Double.parseDouble(values[2]))); 
 					countLoaded++;
 				}
 			}//end of while loop for scanning the file 
-			System.out.println("Done loading data. " + countLoaded + " famous recipes available");
+			System.out.println("Done loading data. " + countLoaded + " employees registered");
 			System.out.println();
 		}
 		catch (Exception e) {

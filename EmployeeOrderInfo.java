@@ -5,7 +5,8 @@ public class EmployeeOrderInfo {
 	private long employeeID;
 	private String name;
 	EmployeeOrderInfo next;
-
+	EmployeeOrderInfo less;
+	EmployeeOrderInfo more;
 
 	private long OrderNumber;
 	private double Time1;// orders taken at particular time
@@ -24,6 +25,10 @@ public class EmployeeOrderInfo {
 				+ Time2 + ", elapsedTime=" + elapsedTime + "]";
 	}
 
+	public EmployeeOrderInfo(long employeeID) {
+		super();
+		this.employeeID = employeeID;
+	}
 	public EmployeeOrderInfo(long employeeID, String name) {
 		super();
 		this.employeeID = employeeID;
@@ -105,6 +110,35 @@ public class EmployeeOrderInfo {
 		return new String(employeeID + "\n" + OrderNumber + "\n" + Time1 + "\n" + Time2 +"\n" + elapsedTime);
 	}
 	
-	
+	public void search(long id) {
+		EmployeeOrderInfo employee;
+		employee = new EmployeeOrderInfo(id);
+		
+		if(employee.getEmployeeID() == employeeID) {
+			System.out.println("Access approved");
+			return;
+		}
+		if(employee.getEmployeeID() < employeeID) {
+			if(less != null) {
+				less.search(id);
+			}
+			else { 
+				System.out.println("Employee ID not valid");
+			}
+			
+		}
+		else { 
+			if(more != null ) {
+				more.search(id);
+			}
+			else {
+				System.out.println("Employee ID not valid");
+			}
+		}
+	}
+	public long compareTo(EmployeeOrderInfo input) {
+		return (long)(employeeID - input.getEmployeeID());
+		
+	}
 
 }
