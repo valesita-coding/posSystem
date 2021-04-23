@@ -6,6 +6,8 @@ import java.util.Collections;
 //C:\Users\vales\Documents\try1.csv
 public class PointOfSalesSystem {
 	static Scanner scnr = new Scanner(System.in);
+	static employeeRoster unsortedE;
+	static employeeRoster sortedE;
 	static roster unsorted;
 	static roster sorted;
 	
@@ -15,9 +17,11 @@ public class PointOfSalesSystem {
 	public static void main(String[] args) {
 		unsorted = new roster();
 		sorted = new roster();
+		unsortedE = new employeeRoster();
+		sortedE = new employeeRoster();
 		
 		loadMenuFile(args[0]); //loads menu list 
-		//loadFile(args[1]); //loads employeeList
+		loadEmployeeFile(args[1]); //loads employeeList
 		//loadFile(args[2]); //loads ad-ons list 
 		
 		boolean done = false;
@@ -290,16 +294,16 @@ public class PointOfSalesSystem {
 			
 			int countLoaded = 0;
 			//String filename = scnr.nextLine().trim();
-			unsorted = new roster();
-			sorted = new roster();
+			unsortedE= new employeeRoster();
+			sortedE = new employeeRoster();
 			Scanner filescanner = new Scanner(new File(filename));
 			while(filescanner.hasNext()) {
 				String line = filescanner.nextLine();
 				String[] values = line.split(",");
-				if(!values[3].equals("Price")) {
+				if(!values[0].equals("Employee ID")) {
 					
 					//studentNode temp = new studentNode(values[0], values[1], Long.parseLong(values[2]));
-					unsorted.addItemToFront(Integer.parseInt(values[0]), values[1], values[2], Double.parseDouble(values[3]), values[4]);
+					unsortedE.addEmployeeFront(Long.parseLong(values[0]), values[1]);
 					
 					//sorted.addStudentSorted(temp.clone());
 					//System.out.println("something");

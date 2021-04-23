@@ -4,21 +4,8 @@ public class EmployeeOrderInfo {
 //will be used to keep track of the order info for each employee 
 	private long employeeID;
 	private String name;
-	public long getEmployeeID() {
-		return employeeID;
-	}
+	EmployeeOrderInfo next;
 
-	public void setEmployeeID(long employeeID) {
-		this.employeeID = employeeID;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	private long OrderNumber;
 	private double Time1;// orders taken at particular time
@@ -84,10 +71,40 @@ public class EmployeeOrderInfo {
 	public void setElapsedTime(double elapsedTime) {
 		this.elapsedTime = elapsedTime;
 	}
+	
+	public EmployeeOrderInfo getNext() {
+		return next;
+	}
 
+	public void setNext(EmployeeOrderInfo next) {
+		this.next = next;
+	}
+
+	public long getEmployeeID() {
+		return employeeID;
+	}
+
+	public void setEmployeeID(long employeeID) {
+		this.employeeID = employeeID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	
-
+	public EmployeeOrderInfo clone() {
+		return new EmployeeOrderInfo(employeeID, OrderNumber, Time1, Time2, elapsedTime);
+	}
+	
+	public String toCSV() {
+		return new String(employeeID + "\n" + OrderNumber + "\n" + Time1 + "\n" + Time2 +"\n" + elapsedTime);
+	}
+	
 	
 
 }
