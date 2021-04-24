@@ -42,6 +42,12 @@ public Integer getNum() {
 		//return "\nIngredients " + ingredients + ", recipe name: " + recipe + ", price: " + price + ", nutritionalInfo: " + nutritionalInfo + ".\n"; 
 	}
 
+	public String toStringAdOn() {
+		return "Ad-On number: " + num + " --- " + "Ad-On Name: " + recipe + " --- " +  
+				 "Price: $" + price + " --- " + "Nutrional Info: " + nutritionalInfo;
+	 
+	}
+
 	public String getIngredients() {
 		return ingredients;
 	}

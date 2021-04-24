@@ -1,5 +1,6 @@
 package posSystem;
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,6 +13,8 @@ public class PointOfSalesSystem {
 	static Scanner scnr = new Scanner(System.in);
 	static employeeRoster unsortedE;
 	static employeeRoster sortedE;
+	static roster unsortedA;
+	static roster sortedA;
 	static roster unsorted;
 	static roster sorted;
 	static ArrayList<MenuOptions> options = new ArrayList<MenuOptions>();
@@ -21,6 +24,8 @@ public class PointOfSalesSystem {
 	public static void main(String[] args) {
 		unsorted = new roster();
 		sorted = new roster();
+		unsortedA = new roster();
+		sortedA = new roster();
 		unsortedE = new employeeRoster();
 		sortedE = new employeeRoster();
 		
@@ -162,10 +167,13 @@ public class PointOfSalesSystem {
 		 * 		ex. bread type, meat, cheeses, etc
 		 * at end show everything, and "Y" to confirm "N" keep editing
 		 */
+
+		System.out.println("Enter the name of the file:");
 		String filename = scnr.nextLine();
 		
 		System.out.println("The ingredients available are:");
-		loadMenuFile(filename);
+		loadAdOnFile(filename);
+		
 		
 		System.out.println();
 		
@@ -213,6 +221,7 @@ public class PointOfSalesSystem {
 		//will search for a record that matches 1 or more parameters 
 		// will call the searchItem() class 
 		
+		
 	}
 	public static void sortMenu(){
 		//thinking on making it a class 
@@ -226,9 +235,24 @@ public class PointOfSalesSystem {
 	
 	
 	public static void addRecord(){
-		//will give the option to add more items to the order 
-		// will call the menuoptions class 
+		//will give the option to add more items to the menu
+		roster addingRecord = unsorted.clone();
+		//boolean done = false;
+		System.out.println("New Menu Item info");
+		System.out.println("Enter Burger number:");
+		int adNum = scnr.nextInt();
+		System.out.println("Enter Recipe name:");
+		String adName = scnr.next();
+		//System.out.println("");
+		//String adBlank = " ";
+		System.out.println("Enter price:");
+		double adPrice = scnr.nextDouble();
+		System.out.println("Enter nutritional info:");
+		String adNut = scnr.next();
 		
+		System.out.println();
+		addingRecord.addItemToFront(adNum, adName, " ", adPrice, adNut);
+		unsorted = addingRecord;
 	}
 	
 	public static void changeRecord(){
@@ -237,10 +261,12 @@ public class PointOfSalesSystem {
 	}
 	public static void deleteRecord(){
 		//will delete a desired record 
+		//boolean done = false;
 		System.out.println("To delete an item from the menu you must enter the id number of that item:");
 		//String delete = scnr.nextLine();
 		
 		int deleteItem = scnr.nextInt();
+		unsorted.delete(deleteItem);
 	}
 	
 	
@@ -253,6 +279,17 @@ public class PointOfSalesSystem {
 	public static void saveAll() {
 		//will save all data to a file(s) so that correct order is served. 
 		//employee info
+		//will write out the sorted list into a CSV file. 
+		System.out.println("Enter the filename for your export:");
+		String outfile = scnr.nextLine().trim(); // user provides the file name 
+		try{
+			PrintWriter out = new PrintWriter(new File(outfile));
+			out.println(unsorted.toCSV()); 
+			out.close();
+		}
+		catch (Exception e){
+			System.out.println("Something went wrong. " + e);
+		}
 	}
 	
 	
@@ -294,7 +331,7 @@ public class PointOfSalesSystem {
 					countLoaded++;
 				}
 			}//end of while loop for scanning the file 
-			System.out.println("Done loading data. " + countLoaded + " famous recipes available");
+			System.out.println("Done loading data. " + countLoaded + " options available");
 			System.out.println();
 		}
 		catch (Exception e) {
@@ -336,6 +373,40 @@ public class PointOfSalesSystem {
 		}
 	}
 	
+	static void loadAdOnFile(String filename) {
+		//loads students from a CSV file 
+		// will store students in the unsorted list
+		try {
+			
+			int countLoaded = 0;
+			//String filename = scnr.nextLine().trim();
+			unsorted = new roster();
+			sorted = new roster();
+			Scanner filescanner = new Scanner(new File(filename));
+			while(filescanner.hasNext()) {
+				String line = filescanner.nextLine();
+				String[] values = line.split(",");
+				if(!values[3].equals("Price")) {
+					
+					//studentNode temp = new studentNode(values[0], values[1], Long.parseLong(values[2]));
+					unsortedA.addItemToFront(Integer.parseInt(values[0]), values[1], values[2], Double.parseDouble(values[3]), values[4]);
+					
+					//sorted.addStudentSorted(temp.clone());
+					//System.out.println("something");
+					//students.add(new studentNode(values[0], values[1], Double.parseDouble(values[2]))); 
+					countLoaded++;
+					
+				}
+			}//end of while loop for scanning the file 
+			unsortedA.printAdOn();
+			System.out.println("Done loading data. " + countLoaded + " options available");
+			System.out.println();
+		}
+		catch (Exception e) {
+			System.out.println("Could not open student list: " + e );
+			
+		}
+	}
 
 }
 	

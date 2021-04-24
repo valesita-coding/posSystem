@@ -1,5 +1,7 @@
 package posSystem;
 
+import sortingLab.studentNode;
+
 public class roster {
 	private MenuOptions head;
 	
@@ -67,7 +69,29 @@ public class roster {
 		}
 	}
 	// will have the code needed to delete an item ordered
-	
+	public void delete(int num) {
+		MenuOptions curr = head;
+		MenuOptions next= curr.getNext();
+		MenuOptions previous = null;
+		
+		while(curr != null) {
+			if(curr.getNum() == num ) {
+				if(curr == head) {
+					head = curr.getNext();
+					return;
+				}
+				else {
+					previous.setNext(next);
+					return;
+				}
+			}
+			//updates the pointers 
+			previous = curr;
+			curr = next;
+			next = next.getNext();
+			
+		}
+	}
 	
 	//will have the toString method
 	public String toString() {
@@ -98,6 +122,14 @@ public class roster {
 		MenuOptions node = head; //pointer
 		while(node != null) { //goes through the entire list 
 			System.out.println(node.toString());
+			node = node.getNext();
+		}
+	}
+	public void printAdOn() {
+		//prints the list selected 
+		MenuOptions node = head; //pointer
+		while(node != null) { //goes through the entire list 
+			System.out.println(node.toStringAdOn());
 			node = node.getNext();
 		}
 	}
