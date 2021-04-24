@@ -18,7 +18,7 @@ public class MenuOptions {
 		this.nutritionalInfo = nutritionalInfo;
 	}
 	
-	public MenuOptions(Integer num, String ingredients, String recipe, double price, String nutritionalInfo) {
+	public MenuOptions(Integer num,String recipe, String ingredients, double price, String nutritionalInfo) {
 		super();
 		this.num = num;
 		this.ingredients = ingredients;
@@ -37,7 +37,9 @@ public Integer getNum() {
 
 @Override
 	public String toString() {
-		return "\nIngredients " + ingredients + ", recipe name: " + recipe + ", price: " + price + ", nutritionalInfo: " + nutritionalInfo + ".\n";
+		return "Burger number: " + num + " --- " + "Recipe Name: " + recipe + " --- " + "Ingredients: " + ingredients + 
+				" --- " + "Price: $" + price + " --- " + "Nutrional Info: " + nutritionalInfo;
+		//return "\nIngredients " + ingredients + ", recipe name: " + recipe + ", price: " + price + ", nutritionalInfo: " + nutritionalInfo + ".\n"; 
 	}
 
 	public String getIngredients() {

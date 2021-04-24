@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public class PointOfSalesSystem {
@@ -30,7 +31,7 @@ public class PointOfSalesSystem {
 		boolean done = false;
 		//System.out.println("completed ");
 		while(!done) {
-			logIN();
+			//logIN();
 			printMenu();
 			
 			String input = scnr.nextLine();
@@ -89,12 +90,24 @@ public class PointOfSalesSystem {
 		while(!done) {
 			try {
 				idNum = Long.parseLong(id);
-				//Collection.sort(employeeID);
-				binarySearch(0, employeeID.size()-1, idNum );
+				if(unsortedE.employeeSearch(idNum) ==false ) {
+					System.out.println("Access denied.");
+					
+					System.out.println();
+					//String trash = scnr.nextLine();
+					break;
+				}
+				else {
+					unsortedE.Search(idNum);
+					System.out.println("Access approved. ");
+					//12String trash = scnr.nextLine();
+				}
+				
 				done= true;
 				
 			}catch (Exception e){
 				System.out.println("Please enter a valid employee ID");
+				
 			}
 		}
 		
@@ -149,8 +162,10 @@ public class PointOfSalesSystem {
 		 * 		ex. bread type, meat, cheeses, etc
 		 * at end show everything, and "Y" to confirm "N" keep editing
 		 */
-		System.out.println("The ingredients available are:");
+		String filename = scnr.nextLine();
 		
+		System.out.println("The ingredients available are:");
+		loadMenuFile(filename);
 		
 		System.out.println();
 		
@@ -163,7 +178,7 @@ public class PointOfSalesSystem {
 		 * * at end show everything, and "Y" to confirm "N" keep editing
 		 */
 		System.out.println("Here are some of our known recipes:");
-		
+		unsorted.printList();
 		System.out.println();
 	}
 	public static void price() {
@@ -192,15 +207,19 @@ public class PointOfSalesSystem {
 		unsortedE.printList();
 	}
 	
+	
 	public static void searchRecords() {
 		//thinking on making it a class 
 		//will search for a record that matches 1 or more parameters 
 		// will call the searchItem() class 
+		
 	}
 	public static void sortMenu(){
 		//thinking on making it a class 
 		//will sort based on 1 or more parameters provided by user 
 		// will call the sortRecords() class 
+		sorted = unsorted.insertionSort();
+		System.out.println(sorted);
 	}
 	
 	
@@ -317,25 +336,7 @@ public class PointOfSalesSystem {
 		}
 	}
 	
-	static void binarySearch(int start, int end, long UIN) {
-		
-		if(end-start < 10){ //switch to linear search as base case to save time
-			for(int i = start; i <= end; i++){
-				if(employeeID.get(i).getEmployeeID() == UIN){ //found it
-					System.out.println("Found it: " + employeeID.get(i));
-					return;
-				}
-			}
-			System.out.println("Not found");
-		}
-		int half = (start + end)/2;
-		if(employeeID.get(half).getEmployeeID() > UIN){ //it's in the first half
-			binarySearch(start,half,UIN);
-		} else{ //it's in the second half
-			binarySearch(half,end,UIN);
-		}
-	
+
 }
 	
 	
-}

@@ -109,4 +109,29 @@ public class employeeRoster {
 		return result; //returns the new roster 
 	}
 	
+	
+	public boolean employeeSearch(long searchId) {
+		EmployeeOrderInfo node = head;
+		
+		while(node != null) {
+			if(node.getEmployeeID() == searchId) {
+				return true;
+				
+			}
+			node = node.getNext();
+		}
+		return false;
+	}
+	
+	public EmployeeOrderInfo Search(long search) {
+		EmployeeOrderInfo node = head;
+		
+		while(node != null) {
+			if(node.getEmployeeID() == search) {
+				return node;
+			}
+			node = node.getNext();
+		}
+		return node;
+	}
 }

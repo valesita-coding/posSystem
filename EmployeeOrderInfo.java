@@ -7,7 +7,7 @@ public class EmployeeOrderInfo implements Comparable<EmployeeOrderInfo> {
 	EmployeeOrderInfo next;
 	EmployeeOrderInfo less;
 	EmployeeOrderInfo more;
-
+	
 	private long OrderNumber;
 	private double Time1;// orders taken at particular time
 	private double Time2;// orders served at particular time
@@ -115,5 +115,6 @@ public class EmployeeOrderInfo implements Comparable<EmployeeOrderInfo> {
 		return (int)(employeeID - input.getEmployeeID());
 		
 	}
+
 
 }

@@ -37,28 +37,28 @@ public class roster {
 		head = front;
 	}
 	// will have option to add a record in a sorted format
-	public void addPriceSorted(MenuOptions sort) {
+	public void addSorted(MenuOptions sort) {
 		if(head == null ) { //if the list is empty
 			head = sort;
 			return;
 		}
-		if(sort.getPrice() < head.getPrice()) { //if the UIN is smaller than the head
+		if(sort.getNum() < head.getNum()) { //if the number is smaller than the head
 			sort.setNext(head);
 			head = sort;
 			return;
 		}
 		MenuOptions temp = head;
 		while(temp != null) { // make sure there is not and identical uin 
-			//if(temp.getPrice() == sort.getPrice() ) {
-				//System.out.println("Please use a different price.");
-				//return;
-			//}
+			if(temp.getNum() == sort.getNum() ) {
+				System.out.println("Please use a different Burger Number.");
+				return;
+			}
 			if(temp.getNext() == null) { // adds it at the end of the list if there is no more uins
 				temp.setNext(sort);
 				return;
 			}
 			//place it between the correct numbers
-			if(temp.getPrice() < sort.getPrice() && temp.getNext().getPrice() > sort.getPrice()) {
+			if(temp.getNum() < sort.getNum() && temp.getNext().getNum() > sort.getNum()) {
 				sort.setNext(temp.getNext());
 				temp.setNext(sort);
 				return;
@@ -110,5 +110,15 @@ public class roster {
 			temp= temp.getNext(); // goes to the next element 
 		}
 		return result; //returns the new roster 
+	}
+	
+	public roster insertionSort() {
+		roster toReturn = new roster(); //blank roster
+		MenuOptions temp = head; // this will help check if the list is blank if it is temp is new head
+		while(temp != null) { // if temp is not null 
+			toReturn.addSorted(temp.clone()); // we add a clone of temp to the roster 
+			temp = temp.getNext(); 
+		}
+		return toReturn;
 	}
 }
