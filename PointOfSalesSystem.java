@@ -2,8 +2,9 @@ package posSystem;
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Collections;
-//C:\Users\vales\Documents\try1.csv
+import java.util.Collection;
+
+
 public class PointOfSalesSystem {
 	
 	
@@ -12,7 +13,6 @@ public class PointOfSalesSystem {
 	static employeeRoster sortedE;
 	static roster unsorted;
 	static roster sorted;
-	static EmployeeOrderInfo tree;
 	static ArrayList<MenuOptions> options = new ArrayList<MenuOptions>();
 	static ArrayList<Double> searches = new ArrayList<Double>();
 	static ArrayList<EmployeeOrderInfo> employeeID = new ArrayList<EmployeeOrderInfo>();
@@ -24,40 +24,43 @@ public class PointOfSalesSystem {
 		sortedE = new employeeRoster();
 		
 		loadMenuFile(args[0]); //loads menu list 
-		//loadEmployeeFile(args[1]); //loads employeeList
+		loadEmployeeFile(args[1]); //loads employeeList
 		//loadMenuFile(args[1]); //loads ad-ons list 
 		
 		boolean done = false;
-		
+		//System.out.println("completed ");
 		while(!done) {
-			//logIN();
+			logIN();
 			printMenu();
 			
 			String input = scnr.nextLine();
 			//options for the user and their outputs
 			if(input.equals("1")) { //1 
-				
+				recipeMenu();
 			}
 			else if(input.equals("2")) { //2 
-				
+				sortMenu();
 			}
 			else if(input.equals("3")) { // 3 
-				
+				addOnsList();
 			}
 			else if(input.equals("4")) { //4  
-				
+				placeOrder();
 			}
 			else if(input.equals("5")) { // gives out the menu for types of sorting algorithms and does the sorting selected
-				
+				searchRecords();
 			}
 			else if(input.equals("6")) { //prints out the unsorted list 
-				
+				saveAll();
 			}
 			else if(input.equals("7")) { // sorts the records according to the desire of the user 
-				
+				changeRecord();
 			}
 			else if(input.equals("8")) { //prints out available famous sandwiches 
-				//loadFile();
+				addRecord();
+			}
+			else if (input.equals("9")) {
+				deleteRecord();
 			}
 			else if(input.equals("0")) { //quits it 
 				done = true;
@@ -75,11 +78,9 @@ public class PointOfSalesSystem {
 		
 
 	}
-	/*	
+	
 	public static void logIN() {
-		System.out.println("To continue, please enter filename to read in employees");
-		String filename = scnr.nextLine().trim();
-		loadEmployeeFile(filename);
+		
 		System.out.println("To log in enter employee ID:");
 		
 		String id = scnr.nextLine();
@@ -88,6 +89,8 @@ public class PointOfSalesSystem {
 		while(!done) {
 			try {
 				idNum = Long.parseLong(id);
+				//Collection.sort(employeeID);
+				binarySearch(0, employeeID.size()-1, idNum );
 				done= true;
 				
 			}catch (Exception e){
@@ -95,11 +98,11 @@ public class PointOfSalesSystem {
 			}
 		}
 		
-		tree.search(idNum);
+		
 		System.out.println();
 		
 	}
-	*/
+	
 	public static void printMenu() {
 		//prints current menu 
 		//will show different options such as
@@ -128,10 +131,10 @@ public class PointOfSalesSystem {
 		//System.out.println();
 	}
 	
-	public static void cartItems() {
+	public static void placeOrder() {
 		//will hold the items that the client wants to order 
 		// and the expected price 
-		System.out.println("Cart items:");
+		System.out.println();
 		
 		
 		
@@ -140,7 +143,7 @@ public class PointOfSalesSystem {
 		// and will have total price 
 	}
 	
-	public static void ingredients() {
+	public static void addOnsList() {
 		//All ingredients listed
 		/* shown by category 
 		 * 		ex. bread type, meat, cheeses, etc
@@ -152,7 +155,7 @@ public class PointOfSalesSystem {
 		System.out.println();
 		
 	}
-	public static void recipe() {
+	public static void recipeMenu() {
 		//All recipes listed	
 		/*list of known recipes with their ingredients
 		 * gives option to add or delete something from recipe
@@ -164,32 +167,14 @@ public class PointOfSalesSystem {
 		System.out.println();
 	}
 	public static void price() {
-		//All prices listed 
-		/*list of prices ordered by 
-		 *  ex. type of meat (low to high, high to low
-		 *  description 
-		 *  add-on prices 
-		 *  * at end show everything, and "Y" to confirm "N" keep editing
-		
-		 */
-		
-		System.out.println("Here is the list of prices:");
-		System.out.println("Add-on prices:");
+
 		
 		System.out.println();
 		
 		
 		
 	}
-	public static void nutritionalInfo() {
-		//nutritional info for each ingredient  
-		System.out.println("Nutritional info about our recipes:");
-		
-		System.out.println();
-	}
-	
-	
-	
+
 	
 	public static void customized() {
 		//aka Secret menu 
@@ -233,6 +218,10 @@ public class PointOfSalesSystem {
 	}
 	public static void deleteRecord(){
 		//will delete a desired record 
+		System.out.println("To delete an item from the menu you must enter the id number of that item:");
+		//String delete = scnr.nextLine();
+		
+		int deleteItem = scnr.nextInt();
 	}
 	
 	
@@ -244,10 +233,6 @@ public class PointOfSalesSystem {
 	
 	public static void saveAll() {
 		//will save all data to a file(s) so that correct order is served. 
-		//items ordered
-		//add-ons
-		//prices
-		//nutr info
 		//employee info
 	}
 	
@@ -331,6 +316,26 @@ public class PointOfSalesSystem {
 			
 		}
 	}
+	
+	static void binarySearch(int start, int end, long UIN) {
+		
+		if(end-start < 10){ //switch to linear search as base case to save time
+			for(int i = start; i <= end; i++){
+				if(employeeID.get(i).getEmployeeID() == UIN){ //found it
+					System.out.println("Found it: " + employeeID.get(i));
+					return;
+				}
+			}
+			System.out.println("Not found");
+		}
+		int half = (start + end)/2;
+		if(employeeID.get(half).getEmployeeID() > UIN){ //it's in the first half
+			binarySearch(start,half,UIN);
+		} else{ //it's in the second half
+			binarySearch(half,end,UIN);
+		}
+	
+}
 	
 	
 }

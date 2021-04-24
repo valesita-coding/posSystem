@@ -1,6 +1,6 @@
 package posSystem;
 
-public class EmployeeOrderInfo {
+public class EmployeeOrderInfo implements Comparable<EmployeeOrderInfo> {
 //will be used to keep track of the order info for each employee 
 	private long employeeID;
 	private String name;
@@ -110,34 +110,9 @@ public class EmployeeOrderInfo {
 		return new String(employeeID + "\n" + OrderNumber + "\n" + Time1 + "\n" + Time2 +"\n" + elapsedTime);
 	}
 	
-	public void search(long id) {
-		EmployeeOrderInfo employee;
-		employee = new EmployeeOrderInfo(id);
-		
-		if(employee.getEmployeeID() == employeeID) {
-			System.out.println("Access approved");
-			return;
-		}
-		if(employee.getEmployeeID() < employeeID) {
-			if(less != null) {
-				less.search(id);
-			}
-			else { 
-				System.out.println("Employee ID not valid");
-			}
-			
-		}
-		else { 
-			if(more != null ) {
-				more.search(id);
-			}
-			else {
-				System.out.println("Employee ID not valid");
-			}
-		}
-	}
-	public long compareTo(EmployeeOrderInfo input) {
-		return (long)(employeeID - input.getEmployeeID());
+
+	public int compareTo(EmployeeOrderInfo input) {
+		return (int)(employeeID - input.getEmployeeID());
 		
 	}
 

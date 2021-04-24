@@ -2,8 +2,7 @@ package posSystem;
 
 public class employeeRoster {
 	private EmployeeOrderInfo head;
-	
-	
+
 	public employeeRoster() {
 		head = null;
 		
@@ -109,4 +108,5 @@ public class employeeRoster {
 		}
 		return result; //returns the new roster 
 	}
+	
 }
